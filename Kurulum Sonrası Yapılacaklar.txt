@@ -1,0 +1,86 @@
+-----Kurulum Sonrası Yapılacaklar-----
+
+
+1- Güncellemeleri Kontrol Et
+sudo apt update && sudo apt dist-upgrade
+
+2- Pencereyi Arka Plana Alma
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+
+3- Tuxedo - Monster Kontrol Merkezi Muadili
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/tuxedo-archive-keyring.gpg] https://deb.tuxedocomputers.com/ubuntu jammy main' | sudo tee /etc/apt/sources.list.d/tuxedo-computers.list
+
+sudo apt update --allow-insecure-repositories
+sudo apt install --allow-unauthenticated tuxedo-archive-keyring
+sudo apt install tuxedo-control-center
+
+4- Opera vb Arama Motoru indirme, ubuntu software içinden
+
+5- GDEBI Kurulumu
+sudo apt-get install gdebi -y
+
+6- Temel Paket ve Kütüphanelerin Kurulumu
+sudo apt install htop neofetch bpytop clang cargo libc6-i386 libc6-x32 libu2f-udev samba-common-bin exfat-fuse default-jdk curl wget unrar linux-headers-$(uname -r) linux-headers-generic git gstreamer1.0-vaapi unzip ntfs-3g p7zip htop neofetch bpytop git gcc make curl bzip2 tar
+
+7- Ardupilot Kurulumu
+sudo apt-get install git
+sudo apt-get install gitk git-gui
+git clone --recurse-submodules https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
+
+8- Ardupilot Sitl Kurulumu ve Kullanımı
+cd ardupilot
+./waf configure --board sitl
+sudo apt install python3-empy
+sudo apt install python3-future
+./waf copter
+cd ArduCopter
+../Tools/autotest/sim_vehicle.py --map --console
+
+9- Pymavlink Mavproxy Kurulumu
+pip install --upgrade pymavlink MAVProxy
+
+10- Gazebo Ardupilot Kurulumu
+
+sudo apt-get update
+sudo apt-get install lsb-release wget gnupg
+sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install gz-harmonic
+
+sudo apt update
+sudo apt install libgz-sim8-dev rapidjson-dev
+cd
+mkdir -p gz_ws/src && cd gz_ws/src
+git clone https://github.com/ArduPilot/ardupilot_gazebo
+export GZ_VERSION=harmonic
+cd ardupilot_gazebo
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+make -j4
+
+export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/gz_ws/src/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+export GZ_SIM_RESOURCE_PATH=$HOME/gz_ws/src/ardupilot_gazebo/models:$HOME/gz_ws/src/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+
+echo 'export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/gz_ws/src/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}' >> ~/.bashrc
+echo 'export GZ_SIM_RESOURCE_PATH=$HOME/gz_ws/src/ardupilot_gazebo/models:$HOME/gz_ws/src/ardupilot_gazebo/worlds:${GZ_SIM_RESOURCE_PATH}' >> ~/.bashrc
+
+--gazebo çalıştırmak için--
+gz sim -v4 -r iris_runway.sdf
+
+--ardupilot sitl çalıştırmak için--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+
+sabit kanatlı iha -- Zephyr delta-wing
+
+--gazebo çalıştırmak için--
+gz sim -v4 -r zephyr_runway.sdf
+
+--ardupilot sitl çalıştırmak için--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduPlane -f gazebo-zephyr --model JSON --map --console
+
