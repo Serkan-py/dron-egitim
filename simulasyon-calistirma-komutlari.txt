@@ -1,0 +1,17 @@
+
+--gazebo çalıştırmak için--
+gz sim -v4 -r iris_runway.sdf
+
+--ardupilot sitl çalıştırmak için--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+
+sabit kanatlı iha -- Zephyr delta-wing
+
+--gazebo çalıştırmak için--
+gz sim -v4 -r zephyr_runway.sdf
+
+--ardupilot sitl çalıştırmak için--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduPlane -f gazebo-zephyr --model JSON --map --console
+
