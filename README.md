@@ -1,0 +1,1 @@
+Bu repository youtube drone eğitim video serisinde kullandığım kodları ve belgeleri depolamak için kurulmuştur. Eğer bir sıkıntı yaşarsanız benimle mail veya linkedin üzerinden iletişime geçebilirsiniz.
