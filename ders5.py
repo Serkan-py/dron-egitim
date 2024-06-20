@@ -36,6 +36,7 @@ print("komut verildi")
 master.motors_armed_wait()
 
 print("arm gerceklesti")
+#modun degisip degismedigini kontrol eden komut
 
 master.mav.command_long_send(
     master.target_system,
