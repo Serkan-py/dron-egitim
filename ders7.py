@@ -1,5 +1,9 @@
+"""
+Haritada rastgele bir koordinata gitmesi saglanacak.
+"""
+
 from pymavlink import mavutil
-import sys
+
 master = mavutil.mavlink_connection('127.0.0.1:14550')
 
 master.wait_heartbeat()
@@ -7,8 +11,8 @@ master.wait_heartbeat()
 print("baglandi")
 
 
-lat = -35.36311138 
-lon = 149.16527338
+lat = -35.36321282 
+lon = 149.16531987
 alt = 14
 
 

@@ -15,7 +15,7 @@ uzerinden ulasabilirsiniz. Iletisim bilgilerim readme dosyasinda bulunmakta, iyi
 """
 
 from pymavlink import mavutil
-import sys
+
 master = mavutil.mavlink_connection('127.0.0.1:14550')
 
 master.wait_heartbeat()
@@ -23,14 +23,14 @@ master.wait_heartbeat()
 print("baglandi")
 
 
-x = 5
-y = 10
-alt = -10 # yukari yon icin (-) asagi yon icin (+) deger verilmeli.
+x = 10 #m/s
+y = -5 #m/s
+alt = 0 # yukari yon icin (-) asagi yon icin (+) deger verilmeli.
 
 
 master.mav.set_position_target_local_ned_send(
     0, master.target_system, master.target_component,
-    mavutil.mavlink.MAV_FRAME_LOCAL_NED,
+    mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED,
     0b110111111000, 
     x,
     y,
